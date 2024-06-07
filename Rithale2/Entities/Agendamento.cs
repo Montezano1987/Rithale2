@@ -1,5 +1,4 @@
 ﻿using Rithale2.Entities.Enums;
-
 namespace Rithale2.Entities
 {
     public class Agendamento

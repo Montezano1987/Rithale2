@@ -9,7 +9,6 @@
             Nome = nome;
             Preco = preco;
         }
-
         public override string ToString()
         {
             return $"Serviço: {Nome}, Preço: {Preco:C2}";

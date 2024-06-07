@@ -1,4 +1,6 @@
-﻿namespace Rithale2.Entities;
+﻿using System;
+
+namespace Rithale2.Entities;
 public class Profissional
 {
     public string Nome {  get; set; }

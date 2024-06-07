@@ -1,13 +1,18 @@
-﻿using System;
-using Rithale2.Entities;
+﻿using Rithale2.Entities;
 using Rithale2.Entities.Enums;
+using System.IO;
 
 namespace Rhitale2
 {
 
     class Program
     {
-        static List<Cliente> clientes = new List<Cliente>();
+        static List<Cliente> clientes = new List<Cliente>
+    {
+        new Cliente("Bruno Montezano", "08702114631", "brunovmontezano@gmail.com" , "32998261225"),
+        new Cliente("Davi Filgueiras", "12345678900", "coyote@hotmail.com", "34627070")
+
+    };
         static List<Profissional> profissionais = new List<Profissional>
     {
         new Profissional("Thamiris Montezano", "Biomedica"),
@@ -41,46 +46,37 @@ namespace Rhitale2
             Console.WriteLine("5. Cadastrar Funcionário");
             Console.WriteLine("6. Remover Funcionário");
             Console.WriteLine("7. Realizar Agendamento");
-            Console.WriteLine("8. Sair");
             Console.Write("Escolha uma opção: ");
 
-            int opcao;
-            if (int.TryParse(Console.ReadLine(), out opcao))
+            string opcao = Console.ReadLine();
+
+            if (opcao == "1")
             {
-                switch (opcao)
-                {
-                    case 1:
-                        MostrarProfissionais();
-                        break;
-                    case 2:
-                        MostrarServicos();
-                        break;
-                    case 3:
-                        CadastrarCliente();
-                        break;
-                    case 4:
-                        RemoverCliente();
-                        break;
-                    case 5:
-                        CadastrarFuncionario();
-                        break;
-                    case 6:
-                        RemoverFuncionario();
-                        break;
-                    case 7:
-                        RealizarAgendamento();
-                        break;
-                    case 8:
-                        RemoverAgendamento();
-                        break;
-                    case 9:
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Console.WriteLine("Opção inválida. Tente novamente.");
-                        MostrarMenuPrincipal();
-                        break;
-                }
+                MostrarProfissionais();
+            }
+            else if (opcao == "2")
+            {
+                MostrarServicos();
+            }
+            else if (opcao == "3")
+            {
+                CadastrarCliente();
+            }
+            else if (opcao == "4")
+            {
+                RemoverCliente();
+            }
+            else if (opcao == "5")
+            {
+                CadastrarFuncionario();
+            }
+            else if (opcao == "6")
+            {
+                RemoverFuncionario();
+            }
+            else if (opcao == "7")
+            {
+                RealizarAgendamento();
             }
             else
             {
@@ -94,7 +90,7 @@ namespace Rhitale2
             Console.WriteLine("Profissionais:");
             foreach (var profissional in profissionais)
             {
-                Console.WriteLine($"- {profissional.Nome}: {profissional.Especialidade}");
+                Console.WriteLine(profissional.ToString());
             }
             Console.WriteLine();
             MostrarMenuPrincipal();
@@ -105,7 +101,7 @@ namespace Rhitale2
             Console.WriteLine("Serviços:");
             foreach (var servico in servicos)
             {
-                Console.WriteLine($"- {servico.Nome}: R${servico.Preco:F2}");
+                Console.WriteLine(servico.ToString());
             }
             Console.WriteLine();
             MostrarMenuPrincipal();
@@ -113,31 +109,54 @@ namespace Rhitale2
 
         static void CadastrarCliente()
         {
-            Console.WriteLine("Cadastro de Cliente:");
-            Console.Write("Nome: ");
-            string nome = Console.ReadLine();
-            Console.Write("CPF: ");
+            
+            bool clienteExistente = false;
+
+            Console.Write("Digite seu CPF:");
             string cpf = Console.ReadLine();
-            Console.Write("Email: ");
-            string email = Console.ReadLine();
-            Console.Write("Telefone: ");
-            string telefone = Console.ReadLine();
 
-            Cliente cliente = new Cliente(nome, cpf, email, telefone);
-            clientes.Add(cliente);
+            foreach (var cliente in clientes)
+            {
+                if (cliente.CPF == cpf)
+                {
+                    clienteExistente = true;
+                    break;
+                }
+            }
+            if (clienteExistente)
+            {
+                Console.WriteLine("Cliente já existe");
+                MostrarMenuPrincipal();
+            }
+            else
+            {
+                Console.WriteLine("Cadastro de Cliente:");
+                Console.Write("Nome: ");
+                string nome = Console.ReadLine();
+                Console.Write("CPF: ");
+                cpf = Console.ReadLine();
+                Console.Write("Email: ");
+                string email = Console.ReadLine();
+                Console.Write("Telefone: ");
+                string telefone = Console.ReadLine();
 
-            Console.WriteLine("Cliente cadastrado com sucesso!");
-            Console.WriteLine();
-            MostrarMenuPrincipal();
+                Cliente cliente = new Cliente(nome, cpf, email, telefone);
+                clientes.Add(cliente);
+
+                Console.WriteLine("Cliente cadastrado com sucesso!");
+                Console.WriteLine();
+                MostrarMenuPrincipal();
+            }
         }
+
 
         static void RemoverCliente()
         {
             Console.WriteLine("Remover Cliente:");
-            Console.Write("CPF do cliente a ser removido: ");
-            string cpf = Console.ReadLine();
+            Console.Write("Nome do cliente a ser removido: ");
+            string nome = Console.ReadLine();
 
-            Cliente cliente = clientes.Find(c => c.CPF == cpf);
+            Cliente cliente = clientes.Find(cliente => cliente.Nome == nome);
             if (cliente != null)
             {
                 clientes.Remove(cliente);
@@ -160,10 +179,27 @@ namespace Rhitale2
             Console.Write("Especialidade: ");
             string especialidade = Console.ReadLine();
 
-            Profissional profissional = new Profissional(nome, especialidade);
-            profissionais.Add(profissional);
+            bool funcionarioExistente = false;
+            foreach (var funcionario in profissionais)
+            {
+                if (funcionario.Nome == nome)
+                {
+                    funcionarioExistente = true;
+                    break;
+                }
+            }
 
-            Console.WriteLine("Funcionário cadastrado com sucesso!");
+            if (funcionarioExistente)
+            {
+                Console.WriteLine("Funcionário já existente");
+            }
+            else
+            {
+                Profissional profissional = new Profissional(nome, especialidade);
+                profissionais.Add(profissional);
+                Console.WriteLine("Funcionário cadastrado com sucesso!");
+            }
+
             Console.WriteLine();
             MostrarMenuPrincipal();
         }
@@ -171,18 +207,17 @@ namespace Rhitale2
         static void RemoverFuncionario()
         {
             Console.WriteLine("Remover Funcionário:");
-            Console.Write("Nome do funcionário a ser removido: ");
-            string nome = Console.ReadLine();
+            Console.Write("Número do funcionário a ser removido: ");
+            int numeroFuncionario = int.Parse(Console.ReadLine());
 
-            Profissional profissional = profissionais.Find(p => p.Nome == nome);
-            if (profissional != null)
+            if (numeroFuncionario >= 1 && numeroFuncionario <= profissionais.Count)
             {
-                profissionais.Remove(profissional);
+                profissionais.RemoveAt(numeroFuncionario - 1);
                 Console.WriteLine("Funcionário removido com sucesso!");
             }
             else
             {
-                Console.WriteLine("Funcionário não encontrado.");
+                Console.WriteLine("Número de funcionário inválido!");
             }
 
             Console.WriteLine();
@@ -191,116 +226,67 @@ namespace Rhitale2
 
         static void RealizarAgendamento()
         {
-            Cliente cliente = CriarCliente();
-            Profissional profissional = EscolherProfissional();
-            Servico servico = EscolherServico();
-            DateTime data = EscolherData();
 
-            Agendamento agendamento = new Agendamento(cliente, profissional, servico, data, StatusAgendamento.Pendente);
-
-            Console.WriteLine("Detalhes do Agendamento:");
-            Console.WriteLine(agendamento);
-            Console.WriteLine();
-            MostrarMenuPrincipal();
-        }
-
-        static void RemoverAgendamento()
-        {
-            Console.WriteLine("Remover Agendamento:");
-            Console.Write("CPF do cliente a ser removido: ");
-            string cpf = Console.ReadLine();
-
-            Cliente cliente = clientes.Find(c => c.CPF == cpf);
-            if (cliente != null)
+            static Profissional EscolherProfissional()
             {
-                clientes.Remove(cliente);
-                Console.WriteLine("Cliente removido com sucesso!");
-            }
-            else
-            {
-                Console.WriteLine("Cliente não encontrado.");
-            }
-
-            Console.WriteLine();
-            MostrarMenuPrincipal();
-        }
-
-        static Cliente CriarCliente()
-        {
-            Console.WriteLine("Informe os dados do cliente:");
-            Console.Write("Nome: ");
-            string nome = Console.ReadLine();
-            Console.Write("CPF: ");
-            string cpf = Console.ReadLine();
-            Console.Write("Email: ");
-            string email = Console.ReadLine();
-            Console.Write("Telefone: ");
-            string telefone = Console.ReadLine();
-
-            return new Cliente(nome, cpf, email, telefone);
-        }
-
-        static Profissional EscolherProfissional()
-        {
-            Console.WriteLine("Escolha um profissional:");
-            int i = 1;
-            foreach (var profissional in profissionais)
-            {
-                Console.WriteLine($"{i}. {profissional}");
-                i++;
-            }
-
-            int escolha;
-            while (true)
-            {
-                Console.Write("Opção: ");
-                if (int.TryParse(Console.ReadLine(), out escolha) && escolha >= 1 && escolha <= profissionais.Count)
+                Console.WriteLine("Escolha um profissional:");
+                int i = 1;
+                foreach (var profissional in profissionais)
                 {
-                    return profissionais[escolha - 1];
+                    Console.WriteLine($"{i}. {profissional}");
+                    i++;
                 }
-                else
+
+                int escolha;
+                while (true)
                 {
-                    Console.WriteLine("Opção inválida. Tente novamente.");
+                    Console.Write("Opção: ");
+
+                    {
+                        escolha = int.Parse(Console.ReadLine());
+                        if (escolha >= 1 && escolha <= profissionais.Count)
+                        {
+                            return profissionais[escolha - 1];
+                        }
+                        else
+                        {
+                            Console.WriteLine("Opção inválida. Tente novamente.");
+                        }
+                    }
                 }
             }
-        }
-
-        static Servico EscolherServico()
-        {
-            Console.WriteLine("Escolha um serviço:");
-            int i = 1;
-            foreach (var servico in servicos)
+            static Servico EscolherServico()
             {
-                Console.WriteLine($"{i}. {servico}");
-                i++;
-            }
-
-            int escolha;
-            while (true)
-            {
-                Console.Write("Opção: ");
-                if (int.TryParse(Console.ReadLine(), out escolha) && escolha >= 1 && escolha <= servicos.Count)
+                Console.WriteLine("Escolha um serviço:");
+                int i = 1;
+                foreach (var servico in servicos)
                 {
-                    return servicos[escolha - 1];
+                    Console.WriteLine($"{i}. {servico}");
+                    i++;
                 }
-                else
+
+                int escolha;
+                while (true)
                 {
-                    Console.WriteLine("Opção inválida. Tente novamente.");
+                    Console.Write("Opção: ");
+                    escolha = int.Parse(Console.ReadLine());
+                    if (escolha >= 1 && escolha <= servicos.Count)
+                    {
+                        return servicos[escolha - 1];
+                    }
+                    else
+                    {
+                        Console.WriteLine("Opção inválida. Tente novamente.");
+                    }
                 }
             }
-        }
 
-        static DateTime EscolherData()
-        {
-            Console.WriteLine("Escolha uma data para o agendamento e hora:");
-            DateTime data;
-            while (!DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out data))
+
+            static DateTime EscolherDataEHora()
             {
-                Console.WriteLine("Formato de data e hora inválido. Tente novamente.");
-                Console.Write("Data e Hora (dd/MM/yyyy HH:mm): ");
+                Console.WriteLine("Escolha uma data e hora para o agendamento:");
+                return DateTime.Parse(Console.ReadLine());
             }
-
-            return data;
         }
     }
 }
