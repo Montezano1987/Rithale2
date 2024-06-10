@@ -9,9 +9,6 @@ namespace Rithale2.Entities
         public DateTime Data { get; set; }
         public StatusAgendamento Status { get; set; }
 
-        public Agendamento()
-        {
-        }
 
         public Agendamento(Cliente cliente, Profissional profissional, Servico servico, DateTime data, StatusAgendamento status)
         {
@@ -20,6 +17,10 @@ namespace Rithale2.Entities
             Servico = servico;
             Data = data;
             Status = status;
+        }
+
+        public Agendamento(string v, string v1, string v2, string v3, string v4)
+        {
         }
 
         public override string ToString()

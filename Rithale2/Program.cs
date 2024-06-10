@@ -1,6 +1,5 @@
 ﻿using Rithale2.Entities;
 using Rithale2.Entities.Enums;
-using System;
 
 namespace Rhitale2
 {
@@ -52,6 +51,7 @@ namespace Rhitale2
 
             Agendamento agendamento = new Agendamento(cliente, profissional, servico, dataHora, StatusAgendamento.Pendente);
             BancoDeDados.GravarAgendamento(agendamento);
+            BancoDeDados.BuscarAgendamentos();
 
             
             Console.WriteLine("Menu Principal:");

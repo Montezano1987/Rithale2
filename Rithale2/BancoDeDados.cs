@@ -1,4 +1,5 @@
-﻿using Rithale2.Entities;
+﻿using System.Data;
+using Rithale2.Entities;
 using Rithale2.Entities.Enums;
 
 public static class BancoDeDados
@@ -58,20 +59,18 @@ public static class BancoDeDados
         File.AppendAllText(CaminhoTabelaAgendamento, agendamentoConcatenado);
     }
 
-    //public static List<Agendamento> BuscarAgendamentos()
-    //{
-    //    string[] linhasAgendamento = File.ReadAllLines(CaminhoTabelaAgendamento);
-    //    var agendamentos = new List<Agendamento>();
-    //    foreach (string stringAgendamentoConcatenado in linhasAgendamento)
-    //    {
-    //        var propriedadesAgendamento = stringAgendamentoConcatenado.Split(';');
-    //        var bruno = propriedadesAgendamento[0];
-    //        var agendamento = new Agendamento(propriedadesAgendamento[0], propriedadesAgendamento[1], propriedadesAgendamento[2], propriedadesAgendamento[3], propriedadesAgendamento[4]);
-    //        var agendamento2 = new Agendamento();
-    //        agendamento2.Cliente = 
-    //        agendamentos.Add(agendamento);
-    //    }
+    public static List<Agendamento> BuscarAgendamentos()
+    {
 
-    //    return agendamentos;
-    //}
+        string[] linhasAgendamento = File.ReadAllLines(CaminhoTabelaAgendamento);
+        var agendamentos = new List<Agendamento>();
+
+        foreach (string stringAgendamentoConcatenado in linhasAgendamento)
+        {
+            var propriedadesAgendamento = stringAgendamentoConcatenado.Split(';');
+            var agendamento = new Agendamento(propriedadesAgendamento[0], propriedadesAgendamento[1], propriedadesAgendamento[2], propriedadesAgendamento[3], propriedadesAgendamento[4]);
+            agendamentos.Add(agendamento);
+        }
+        return agendamentos;
+    }
 }
