@@ -50,7 +50,11 @@ public static class BancoDeDados
 
     public static void GravarAgendamento(Agendamento agendamento)
     {
-        var agendamentoConcatenado = agendamento.Cliente + ";" + agendamento.Profissional + ";" + agendamento.Servico + ";" + agendamento.Data + ";" + agendamento.Status + Environment.NewLine;
+        var agendamentoConcatenado = agendamento.Cliente.Nome + "," + agendamento.Cliente.CPF + "," + agendamento.Cliente.Email + "," + agendamento.Cliente.Telefone
+            + ";" + agendamento.Profissional.Nome + "," + agendamento.Profissional.Especialidade
+            + ";" + agendamento.Servico.Nome + "," + agendamento.Servico.Preco
+            + ";" + agendamento.Data
+            + ";" + agendamento.Status + Environment.NewLine;
         File.AppendAllText(CaminhoTabelaAgendamento, agendamentoConcatenado);
     }
 

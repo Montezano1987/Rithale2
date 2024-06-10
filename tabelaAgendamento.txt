@@ -1,1 +1,3 @@
 Nome: Pedro a, CPF: 123456789aa00, Email: pedromonteaazano@gmail.com, Telefone: 88235939;Nome: Vanesaaaa, Especialidade: Sombrancaaaaelha;Serviço: Sombrancelha, Preço: R$ 100,00;10/06/2024 19:00:00;Pendente
+Pedro a;123456789aa00;pedromonteaazano@gmail.com;88235939;Vanesaaaa;Sombrancaaaaelha;Sombrancelha;100;10/06/2024 19:00:00;Pendente
+Pedro a,123456789aa00,pedromonteaazano@gmail.com,88235939;Vanesaaaa,Sombrancaaaaelha;Sombrancelha,100;10/06/2024 19:00:00;Pendente
