@@ -1,6 +1,6 @@
 ﻿using Rithale2.Entities;
 using Rithale2.Entities.Enums;
-using System.IO;
+using System;
 
 namespace Rhitale2
 {
@@ -36,8 +36,24 @@ namespace Rhitale2
             MostrarMenuPrincipal();
         }
 
+
         static void MostrarMenuPrincipal()
         {
+            BancoDeDados.GravarCliente(new Cliente("Pedro a", "123456789aa00", "pedromonteaazano@gmail.com", "88235939"));
+            BancoDeDados.BuscarClientes();
+            BancoDeDados.GravarProfissionais(new Profissional("Vanesaaaa", "Sombrancaaaaelha"));
+            BancoDeDados.BuscarProfissionais();
+
+            Cliente cliente = new Cliente("Pedro a", "123456789aa00", "pedromonteaazano@gmail.com", "88235939");
+            Profissional profissional = new Profissional("Vanesaaaa", "Sombrancaaaaelha");
+            Servico servico = new Servico("Sombrancelha", double.Parse("100,00"));
+            DateTime dataHora = DateTime.Parse("10/06/2024 19:00");
+            string Status = ("Pendente");
+
+            Agendamento agendamento = new Agendamento(cliente, profissional, servico, dataHora, StatusAgendamento.Pendente);
+            BancoDeDados.GravarAgendamento(agendamento);
+
+            
             Console.WriteLine("Menu Principal:");
             Console.WriteLine("1. Ver informações sobre os profissionais");
             Console.WriteLine("2. Ver informações sobre os serviços");
@@ -87,6 +103,7 @@ namespace Rhitale2
 
         static void MostrarProfissionais()
         {
+
             Console.WriteLine("Profissionais:");
             foreach (var profissional in profissionais)
             {
@@ -109,7 +126,7 @@ namespace Rhitale2
 
         static void CadastrarCliente()
         {
-            
+
             bool clienteExistente = false;
 
             Console.Write("Digite seu CPF:");

@@ -9,6 +9,10 @@ namespace Rithale2.Entities
         public DateTime Data { get; set; }
         public StatusAgendamento Status { get; set; }
 
+        public Agendamento()
+        {
+        }
+
         public Agendamento(Cliente cliente, Profissional profissional, Servico servico, DateTime data, StatusAgendamento status)
         {
             Cliente = cliente;
