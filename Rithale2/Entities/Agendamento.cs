@@ -19,10 +19,6 @@ namespace Rithale2.Entities
             Status = status;
         }
 
-        public Agendamento(string v, string v1, string v2, string v3, string v4)
-        {
-        }
-
         public override string ToString()
         {
             return $"Cliente: {Cliente}, Profissional: {Profissional}, Serviço: {Servico}, Data: {Data}, Status: {Status}";

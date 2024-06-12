@@ -52,8 +52,7 @@ namespace Rhitale2
             Agendamento agendamento = new Agendamento(cliente, profissional, servico, dataHora, StatusAgendamento.Pendente);
             BancoDeDados.GravarAgendamento(agendamento);
             BancoDeDados.BuscarAgendamentos();
-
-            
+                        
             Console.WriteLine("Menu Principal:");
             Console.WriteLine("1. Ver informações sobre os profissionais");
             Console.WriteLine("2. Ver informações sobre os serviços");

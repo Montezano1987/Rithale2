@@ -61,16 +61,28 @@ public static class BancoDeDados
 
     public static List<Agendamento> BuscarAgendamentos()
     {
-
-        string[] linhasAgendamento = File.ReadAllLines(CaminhoTabelaAgendamento);
+        string[] linhasAgendamentos = File.ReadAllLines(CaminhoTabelaAgendamento);
         var agendamentos = new List<Agendamento>();
-
-        foreach (string stringAgendamentoConcatenado in linhasAgendamento)
+        foreach (string stringAgendamentoConcatenado in linhasAgendamentos)
         {
             var propriedadesAgendamento = stringAgendamentoConcatenado.Split(';');
-            var agendamento = new Agendamento(propriedadesAgendamento[0], propriedadesAgendamento[1], propriedadesAgendamento[2], propriedadesAgendamento[3], propriedadesAgendamento[4]);
+
+            var propriedadesCliente = propriedadesAgendamento[0].Split(',');
+            var cliente = new Cliente(propriedadesCliente[0], propriedadesCliente[1], propriedadesCliente[2], propriedadesCliente[3]);
+
+            var propriedadesProfissional = propriedadesAgendamento[1].Split(',');
+            var profissional = new Profissional(propriedadesProfissional[0], propriedadesProfissional[1]);
+
+            var propriedadesServico = propriedadesAgendamento[2].Split(',');
+            var servico = new Servico(propriedadesServico[0], double.Parse(propriedadesServico[1]));
+
+            var data = DateTime.Parse(propriedadesAgendamento[3]);
+            var status = StatusAgendamento.Pendente;
+            var agendamento = new Agendamento(cliente, profissional, servico, data, status);
             agendamentos.Add(agendamento);
         }
+
         return agendamentos;
     }
 }
+
